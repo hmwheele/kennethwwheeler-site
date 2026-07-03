@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kenneth W. Wheeler</title>
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <style>
+    @font-face {
+      font-family: 'Beni';
+      src: url('images/beni-black.ttf') format('truetype');
+      font-weight: 900;
+      font-style: normal;
+    }
+
+    /* Reset & Base */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      color: #1a1a1a;
+      line-height: 1.6;
+    }
+    a { text-decoration: none; color: inherit; }
+    img { max-width: 100%; height: auto; display: block; }
+    p { font-family: Georgia, Times, 'Times New Roman', serif; }
+
+
+    /* Utility */
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+    .container-sm { max-width: 720px; margin: 0 auto; padding: 0 24px; }
+    .btn {
+      display: inline-block;
+      background: #1a1a1a;
+      color: #fff;
+      padding: 12px 28px;
+      font-size: 1rem;
+      font-weight: 600;
+      border: 2px solid #1a1a1a;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .btn:hover { background: transparent; color: #1a1a1a; }
+    .btn-light {
+      background: #7d111c;
+      color: #fff;
+      border-color: #7d111c;
+    }
+    .btn-light:hover { background: #5e0d15; border-color: #5e0d15; color: #fff; }
+
+    /* Navigation */
+    .navbar {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: #fff;
+      border-bottom: 1px solid #1a1a1a;
+      padding: 8px 0;
+    }
+    .navbar .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .navbar-brand {
+      font-size: 32px;
+      font-weight: 700;
+      color: #1a1a1a;
+      letter-spacing: 0.5px;
+    }
+    .nav-links { display: flex; align-items: center; gap: 32px; }
+    .nav-links a {
+      color: rgba(26,26,26,0.7);
+      font-size: 0.95rem;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: #1a1a1a; }
+    .nav-links .btn { padding: 8px 20px; font-size: 0.9rem; background: #7d111c; color: #fff; border-color: #7d111c; }
+    .nav-links .btn:hover { background: #5e0d15; border-color: #5e0d15; color: #fff; }
+
+    /* Mobile nav toggle */
+    .nav-toggle { display: none; background: none; border: none; cursor: pointer; padding: 8px; }
+    .nav-toggle span { display: block; width: 24px; height: 2px; background: #1a1a1a; margin: 5px 0; transition: 0.3s; }
+
+    /* Hero Section */
+    .hero {
+      background: url('images/brickbackground.jpg');
+      background-size: cover;
+      background-position: center;
+      color: #1a1a1a;
+      padding: 160px 0 100px;
+      min-height: 90vh;
+      display: flex;
+      align-items: center;
+    }
+    .hero .container {
+      display: grid;
+      grid-template-columns: 1fr 1.5fr;
+      gap: 60px;
+      align-items: center;
+    }
+    .hero-image {
+      display: flex;
+      justify-content: center;
+    }
+    .hero-image img {
+      max-width: 320px;
+      filter: drop-shadow(0 20px 40px rgba(0,0,0,0.4));
+    }
+    .hero-content h1,
+    .hero-content h2 {
+      font-family: 'Beni', Impact, sans-serif;
+      font-size: 6rem;
+      font-weight: normal;
+      line-height: 1.05;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #1a1a1a;
+    }
+    .hero-content h1 { line-height: 5.5rem; margin-bottom: 0; }
+    .hero-content h2 { font-size: 6rem; line-height: 5.5rem; margin-bottom: 32px; }
+
+    /* Purchase Section */
+    .purchase {
+      padding: 80px 0;
+      background: #fff;
+      text-align: center;
+    }
+    .purchase h2 {
+      font-size: 3.2rem;
+      font-weight: 700;
+      margin-bottom: 48px;
+    }
+    .purchase-grid {
+      display: flex;
+      justify-content: center;
+      gap: 32px;
+      flex-wrap: wrap;
+    }
+    .purchase-card {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 220px;
+      height: 140px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      padding: 24px;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .purchase-card:hover {
+      border-color: #7d111c;
+      box-shadow: 0 4px 16px rgba(125,17,28,0.1);
+    }
+    .purchase-card svg, .purchase-card img {
+      max-width: 160px;
+      max-height: 50px;
+      object-fit: contain;
+    }
+
+    /* About / Book Section */
+    .about {
+      background: #f8f7f5;
+      padding: 100px 0;
+    }
+    .about .container {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 60px;
+      align-items: center;
+    }
+    .about-image img {
+      border-radius: 4px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+    }
+    .about-content h2 {
+      font-size: 3.2rem;
+      margin-bottom: 20px;
+    }
+    .about-content p {
+      font-size: 1.05rem;
+      color: #444;
+      line-height: 1.8;
+      margin-bottom: 28px;
+    }
+
+    /* Email Signup */
+    .signup {
+      background: #1a1a1a;
+      color: #fff;
+      padding: 80px 0;
+      text-align: center;
+    }
+    .signup h3 {
+      font-size: 1.6rem;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+    .signup-subtitle {
+      color: rgba(255,255,255,0.6);
+      font-size: 1rem;
+      margin-bottom: 28px;
+    }
+    .signup-form {
+      display: flex;
+      gap: 12px;
+      max-width: 500px;
+      margin: 0 auto 16px;
+    }
+    .signup-form input[type="email"] {
+      flex: 1;
+      padding: 12px 16px;
+      font-size: 1rem;
+      border: 1px solid rgba(255,255,255,0.3);
+      background: rgba(255,255,255,0.1);
+      color: #fff;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .signup-form input[type="email"]::placeholder { color: rgba(255,255,255,0.5); }
+    .signup-form input[type="email"]:focus { border-color: #fff; }
+    .signup-form .btn-light { white-space: nowrap; }
+    .signup-terms {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.5);
+    }
+    .signup-terms a { text-decoration: underline; }
+
+    /* Author Section */
+    .author {
+      padding: 100px 0;
+      background: #fff;
+    }
+    .author .container {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+    .author-content h2 {
+      font-size: 3.2rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+    .author-content p {
+      font-size: 1.05rem;
+      color: #444;
+      line-height: 1.8;
+    }
+    .author-image img {
+      border-radius: 4px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+    }
+
+    /* Testimonials */
+    .testimonials {
+      background: #f8f7f5;
+      padding: 100px 0;
+      overflow: hidden;
+    }
+    .testimonials h2 {
+      font-size: 3.2rem;
+      font-weight: 700;
+      margin-bottom: 40px;
+    }
+    .testimonials-track {
+      display: flex;
+      gap: 28px;
+      overflow: hidden;
+      padding-bottom: 20px;
+    }
+    .testimonials-inner {
+      display: flex;
+      gap: 28px;
+      animation: scroll-left 20s linear infinite;
+    }
+    .testimonials-inner:hover {
+      animation-play-state: paused;
+    }
+    @keyframes scroll-left {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    .testimonial {
+      flex: 0 0 420px;
+      scroll-snap-align: start;
+      background: #fff;
+      border-radius: 8px;
+      padding: 40px 36px;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .testimonial blockquote {
+      font-size: 1.15rem;
+      font-style: italic;
+      line-height: 1.7;
+      color: #2a2a2a;
+      margin-bottom: 28px;
+      flex: 1;
+    }
+    .testimonial .attribution {
+      font-weight: 600;
+      font-size: 1rem;
+      color: #1a1a1a;
+    }
+    .testimonial .role {
+      font-size: 0.95rem;
+      color: #666;
+      margin-top: 4px;
+    }
+
+    /* In The Media Section */
+    .media {
+      padding: 100px 0;
+      background: #fff;
+    }
+    .media h2 {
+      font-size: 3.2rem;
+      font-weight: 700;
+      margin-bottom: 48px;
+    }
+    .media-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .media-card {
+      display: grid;
+      grid-template-columns: 48px 1fr auto;
+      gap: 20px;
+      align-items: start;
+      padding: 32px 0;
+      border-bottom: 1px solid #eee;
+      transition: background 0.2s;
+    }
+    .media-card:first-child { border-top: 1px solid #eee; }
+    .media-card:hover { background: #fafaf8; }
+    .media-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 8px;
+      background: #f0efed;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+    .media-icon img {
+      width: 28px;
+      height: 28px;
+      object-fit: contain;
+    }
+    .media-icon .icon-letter {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #555;
+    }
+    .media-body h3 {
+      font-size: 1.15rem;
+      font-weight: 600;
+      margin-bottom: 4px;
+      line-height: 1.4;
+    }
+    .media-body .media-pub {
+      font-size: 0.85rem;
+      color: #888;
+      margin-bottom: 10px;
+    }
+    .media-body .media-pub span { font-weight: 600; color: #555; }
+    .media-body .media-pub,
+    .media-body blockquote { font-family: Georgia, Times, 'Times New Roman', serif; }
+    .media-body blockquote {
+      font-size: 0.98rem;
+      font-style: italic;
+      color: #555;
+      line-height: 1.7;
+      border-left: 3px solid #ddd;
+      padding-left: 16px;
+    }
+    .media-link {
+      align-self: center;
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: #1a1a1a;
+      white-space: nowrap;
+    }
+    .media-link svg { transition: transform 0.2s; }
+    .media-card:hover .media-link svg { transform: translateX(4px); }
+
+    /* Hero Rating */
+    .hero-rating {
+      font-size: 14px;
+      font-weight: 400;
+      color: #555;
+      margin-top: 20px;
+    }
+
+
+    /* Book Tour */
+    .tour {
+      background: #1a1a1a;
+      color: #fff;
+      padding: 100px 0;
+    }
+    .tour h2 {
+      font-size: 3.2rem;
+      font-weight: 700;
+      margin-bottom: 48px;
+    }
+    .tour-item {
+      display: grid;
+      grid-template-columns: 1fr 1.5fr 1fr 0.5fr auto;
+      gap: 20px;
+      align-items: center;
+      padding: 24px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.15);
+    }
+    .tour-item:first-child { border-top: 1px solid rgba(255,255,255,0.15); }
+    .tour-location { font-weight: 600; font-size: 1.05rem; }
+    .tour-venue { color: rgba(255,255,255,0.7); }
+    .tour-date { color: rgba(255,255,255,0.7); }
+    .tour-time { color: rgba(255,255,255,0.5); font-size: 0.9rem; }
+
+    /* Contact */
+    .contact {
+      padding: 100px 0;
+      background: #f8f7f5;
+    }
+    .contact h2 {
+      font-size: 3.2rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+      text-align: center;
+    }
+    .contact .subtitle {
+      text-align: center;
+      color: #666;
+      font-size: 1.05rem;
+      margin-bottom: 40px;
+    }
+    .contact-form { max-width: 600px; margin: 0 auto; }
+    .form-group { margin-bottom: 20px; }
+    .form-group label {
+      display: block;
+      font-weight: 600;
+      font-size: 0.95rem;
+      margin-bottom: 6px;
+    }
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 12px 16px;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      background: #fff;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus { border-color: #1a1a1a; }
+    .form-group textarea { min-height: 140px; resize: vertical; }
+    .form-checkbox {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 24px;
+      font-size: 0.9rem;
+      color: #666;
+    }
+    .form-checkbox a { text-decoration: underline; }
+    .contact-form .btn { width: 100%; text-align: center; }
+
+    /* Footer */
+    .footer {
+      background: #0d0d0d;
+      color: rgba(255,255,255,0.5);
+      padding: 32px 0;
+      text-align: center;
+      font-size: 0.9rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .nav-links.active {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0; right: 0;
+        background: #fff;
+        border-top: 1px solid #eee;
+        padding: 24px;
+        gap: 16px;
+      }
+      .nav-toggle { display: block; }
+
+      .hero { padding: 120px 0 60px; min-height: auto; }
+      .hero .container { grid-template-columns: 1fr; text-align: center; }
+      .hero-image { order: -1; }
+      .hero-image img { max-width: 220px; }
+      .hero-content h1,
+      .hero-content h2 { font-size: 3rem; }
+
+      .about .container,
+      .author .container { grid-template-columns: 1fr; }
+      .author-image { order: -1; }
+
+      .signup-form { flex-direction: column; }
+
+      .testimonial { flex: 0 0 300px; padding: 28px 24px; }
+
+      .purchase-card { width: 100%; max-width: 280px; }
+      .media-card { grid-template-columns: 40px 1fr; gap: 12px; }
+      .media-link { grid-column: 1 / -1; }
+
+      .tour-item {
+        grid-template-columns: 1fr 1fr;
+        gap: 8px 16px;
+      }
+      .tour-item .btn { grid-column: 1 / -1; justify-self: start; }
+    }
+
+    /* Section headers use the Beni display font — regular weight, never italic */
+    .navbar-brand,
+    .purchase h2,
+    .about-content h2,
+    .author-content h2,
+    .testimonials h2,
+    .media h2,
+    .tour h2,
+    .contact h2,
+    .signup h3 {
+      font-family: 'Beni', Impact, sans-serif;
+      font-weight: normal;
+      font-style: normal;
+      line-height: 0.9;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="container">
+      <a href="#hero" class="navbar-brand">Kenneth W. Wheeler</a>
+      <div class="nav-links" id="navLinks">
+        <a href="#about">About</a>
+        <a href="#author">The Author</a>
+        <a href="#testimonials">Testimonial</a>
+        <a href="#media">In The Media</a>
+        <a href="#contact">Contact</a>
+        <a href="https://www.amazon.com/US-Resurrection-Rev-Kenneth-Wheeler/dp/B0BM3HHFFJ/ref=sr_1_1?keywords=us+kenneth+wheeler&qid=1669418420&sprefix=us+kenneth+w%2Caps%2C126&sr=8-1" target="_blank" class="btn btn-light">Order now</a>
+      </div>
+      <button class="nav-toggle" onclick="document.getElementById('navLinks').classList.toggle('active')" aria-label="Toggle navigation">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero" id="hero">
+    <div class="container">
+      <div class="hero-image">
+        <img src="images/book-cover.png" alt="US: The Resurrection of American Terror book cover">
+      </div>
+      <div class="hero-content" style="text-align: center;">
+        <h1>Kenneth Wheeler</h1>
+        <h2>US: The Resurrection Of American Terror</h2>
+        <a href="https://www.amazon.com/US-Resurrection-Rev-Kenneth-Wheeler/dp/B0BM3HHFFJ/ref=sr_1_1?keywords=us+kenneth+wheeler&qid=1669418420&sprefix=us+kenneth+w%2Caps%2C126&sr=8-1" target="_blank" class="btn btn-light">Order now</a>
+        <p class="hero-rating">4.7 rating on Amazon</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Purchase Section -->
+  <section class="purchase" id="purchase">
+    <div class="container">
+      <h2>Purchase your copy today</h2>
+      <div class="purchase-grid">
+
+        <!-- Amazon -->
+        <a href="https://www.amazon.com/US-Resurrection-Rev-Kenneth-Wheeler/dp/B0BM3HHFFJ" target="_blank" class="purchase-card">
+          <img src="images/logos/Amazon_(company)-Logo.wine.png" alt="Amazon" style="max-width: 200px; max-height: 65px;">
+        </a>
+
+
+<!-- Audible -->
+        <a href="https://www.audible.com/pd/US-The-Resurrection-of-American-Terror-Audiobook/B0BRYNTG2H" target="_blank" class="purchase-card">
+          <img src="images/logos/Audible_logo.svg.png" alt="Audible">
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section class="about" id="about">
+    <div class="container">
+      <div class="about-image">
+        <img src="images/book-screenshot.png" alt="Book preview">
+      </div>
+      <div class="about-content">
+        <h2>This is us, America. This is who we are.</h2>
+        <p>In <em>US: The Resurrection of American Terror</em>, Evangelical Lutheran pastor Kenneth Wheeler exposes white supremacy as America's greatest threat. Transcending the boundaries of memoir, scholarship, theology, and sharp political critique, Pastor Wheeler takes readers on his own seven-decade-long journey that lays bare the terror of being Black in America. From his childhood in Jackson, Mississippi under the trauma of Jim Crow segregation to the January 6 attack on the U.S. Capitol, Wheeler steadily holds a mirror up to a nation drowning in a rising tide of white supremacy.</p>
+        <p><em>US: The Resurrection of American Terror</em> offers a deeply vulnerable and piercing portrait of the human toll of white supremacy and points to the Cross as a place of hope and reconciliation. This is a must-read for anyone seeking to understand the toxic and deadly interplay between anti-Blackness, nationalism, and Christianity in America.</p>
+        <a href="https://www.amazon.com/US-Resurrection-Rev-Kenneth-Wheeler/dp/B0BM3HHFFJ/ref=sr_1_1?keywords=us+kenneth+wheeler&qid=1669418420&sprefix=us+kenneth+w%2Caps%2C126&sr=8-1" target="_blank" class="btn">Order now</a>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Author Section -->
+  <section class="author" id="author">
+    <div class="container">
+      <div class="author-content">
+        <h2>About the author</h2>
+        <p>A retired ordained pastor in the Evangelical Lutheran Church in America. He is a sought-after preacher, public theologian, and writer. He is a guest lecturer on pastoral leadership in the 21st century at Wartburg Theological Seminary, where he received a Doctor of Divinity Degree honoris causa. Kenneth is an in-demand preacher for the National observance of the Dr. Martin Luther King Jr. Holiday.</p>
+        <br>
+        <p>Most of his writings, sermons, and lectures focus on faith, race, and social justice. Wheeler is a respected elder and mentor to young pastors and seminarians. A native of Jackson, Mississippi, Pastor Wheeler earned a B.A. in Religion from Concordia College in Moorhead, Minnesota, and an M.DIV from Trinity Lutheran Seminary in Columbus, Ohio.</p>
+      </div>
+      <div class="author-image">
+        <img src="images/kww-pic.jpeg" alt="Kenneth W. Wheeler">
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section class="testimonials" id="testimonials">
+    <div class="container">
+      <h2>Testimonials</h2>
+    </div>
+    <div class="testimonials-track">
+        <div class="testimonials-inner">
+          <div class="testimonial">
+            <blockquote>"Rev. Kenneth Wheeler sings the spirit of his life as a black church leader. His voice is bold in concert with black writers and intellectuals. From this witness, we ourselves learn to sing that for Christ's sake every black life matters."</blockquote>
+            <div>
+              <p class="attribution">Craig L. Nessan</p>
+              <p class="role">Wartburg Theological Seminary</p>
+            </div>
+          </div>
+          <div class="testimonial">
+            <blockquote>"This revelatory book is telling, revealing, and too important not to add to the libraries of those who love the church and seek her newest reformation."</blockquote>
+            <div>
+              <p class="attribution">Rev. Dr. Ronald S. Bonner</p>
+            </div>
+          </div>
+          <div class="testimonial">
+            <blockquote>"The book is important reading for us white Christians... 'White supremacy' comes into light not simply as a sickness of a few on the far-right, but as deeply ingrained cultural patterns that benefit all of us who are white, and who care about justice and equality. This book should be used in study groups!"</blockquote>
+            <div>
+              <p class="attribution">Peter Rogness</p>
+              <p class="role">Retired Bishop, Evangelical Lutheran Church in America</p>
+            </div>
+          </div>
+          <!-- Duplicates for seamless loop -->
+          <div class="testimonial">
+            <blockquote>"Rev. Kenneth Wheeler sings the spirit of his life as a black church leader. His voice is bold in concert with black writers and intellectuals. From this witness, we ourselves learn to sing that for Christ's sake every black life matters."</blockquote>
+            <div>
+              <p class="attribution">Craig L. Nessan</p>
+              <p class="role">Wartburg Theological Seminary</p>
+            </div>
+          </div>
+          <div class="testimonial">
+            <blockquote>"This revelatory book is telling, revealing, and too important not to add to the libraries of those who love the church and seek her newest reformation."</blockquote>
+            <div>
+              <p class="attribution">Rev. Dr. Ronald S. Bonner</p>
+            </div>
+          </div>
+          <div class="testimonial">
+            <blockquote>"The book is important reading for us white Christians... 'White supremacy' comes into light not simply as a sickness of a few on the far-right, but as deeply ingrained cultural patterns that benefit all of us who are white, and who care about justice and equality. This book should be used in study groups!"</blockquote>
+            <div>
+              <p class="attribution">Peter Rogness</p>
+              <p class="role">Retired Bishop, Evangelical Lutheran Church in America</p>
+            </div>
+          </div>
+        </div>
+      </div>
+  </section>
+
+  <!-- In The Media Section -->
+  <section class="media" id="media">
+    <div class="container">
+      <h2>In The Media</h2>
+
+      <div class="media-list">
+
+        <!-- Patheos -->
+        <a href="https://www.patheos.com/blogs/ecopreacher/2023/08/review-rev-kenneth-wheeler-us-resurrection-of-american-terror/" target="_blank" class="media-card">
+          <div class="media-icon">
+            <img src="https://www.patheos.com/favicon.ico" alt="Patheos" onerror="this.style.display='none';this.parentElement.innerHTML='<span class=icon-letter>P</span>'">
+          </div>
+          <div class="media-body">
+            <h3>Review of Rev. Kenneth Wheeler's <em>US: The Resurrection of American Terror</em></h3>
+            <div class="media-pub"><span>Patheos &middot; EcoPreacher</span> &mdash; By Leah D. Schade &middot; August 2023</div>
+            <blockquote>A profound and prophetic memoir that every White Christian needs to read. Wheeler draws on his experience of the whiteness of the Lutheran Church in America and how it has perpetuated the sin of racism.</blockquote>
+          </div>
+          <div class="media-link">Read <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="1.5"/></svg></div>
+        </a>
+
+        <!-- Living Lutheran -->
+        <a href="https://www.livinglutheran.org/a-prophetic-call-to-action/" target="_blank" class="media-card">
+          <div class="media-icon">
+            <img src="https://www.livinglutheran.org/favicon.ico" alt="Living Lutheran" onerror="this.style.display='none';this.parentElement.innerHTML='<span class=icon-letter>L</span>'">
+          </div>
+          <div class="media-body">
+            <h3>A Prophetic Call to Action</h3>
+            <div class="media-pub"><span>Living Lutheran</span> &mdash; Interview</div>
+            <blockquote>Wheeler was compelled to write the book after connecting the trauma he'd experienced under Jim Crow segregation to the rise in Christian nationalism. Grounded in Scripture, <em>US</em> challenges readers to reclaim the fullness of their humanity.</blockquote>
+          </div>
+          <div class="media-link">Read <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="1.5"/></svg></div>
+        </a>
+
+        <!-- Grand Canyon Synod -->
+        <a href="https://www.gcsynod.org/news/a-prophetic-call-to-action-an-interview-with-author-kenneth-wheeler" target="_blank" class="media-card">
+          <div class="media-icon">
+            <img src="https://www.gcsynod.org/favicon.ico" alt="Grand Canyon Synod" onerror="this.style.display='none';this.parentElement.innerHTML='<span class=icon-letter>G</span>'">
+          </div>
+          <div class="media-body">
+            <h3>A Prophetic Call to Action: An Interview with Author Kenneth Wheeler</h3>
+            <div class="media-pub"><span>Grand Canyon Synod &middot; ELCA</span> &mdash; 2023</div>
+            <blockquote>Wheeler discusses the vulnerability and directness needed to write <em>US: The Resurrection of American Terror</em>, and how the book confronts Christian nationalism head-on through the lens of his seven decades as a Black man in America.</blockquote>
+          </div>
+          <div class="media-link">Read <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="1.5"/></svg></div>
+        </a>
+
+        <!-- LA Sentinel -->
+        <a href="https://lasentinel.net/reverend-dr-kenneth-w-wheeler-to-talk-about-greatest-threat-to-the-church.html" target="_blank" class="media-card">
+          <div class="media-icon">
+            <img src="https://lasentinel.net/favicon.ico" alt="Los Angeles Sentinel" onerror="this.style.display='none';this.parentElement.innerHTML='<span class=icon-letter>S</span>'">
+          </div>
+          <div class="media-body">
+            <h3>Reverend Dr. Kenneth W. Wheeler to Talk About Greatest Threat to the Church</h3>
+            <div class="media-pub"><span>Los Angeles Sentinel</span></div>
+            <blockquote>Wheeler argues that white supremacy is the greatest existential threat that faces America and the American church &mdash; "a book that probably, I had been carrying around in my system, in my body, for probably 70 years."</blockquote>
+          </div>
+          <div class="media-link">Read <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="1.5"/></svg></div>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Substack / Subscribe Section -->
+  <section class="signup" id="subscribe">
+    <div class="container-sm">
+      <p style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 3px; color: rgba(255,255,255,0.45); margin-bottom: 12px;">Read more</p>
+      <h3>Kenneth's Musings</h3>
+      <p class="signup-subtitle">Reflections on race, politics, and theology. Subscribe to stay connected.</p>
+      <a href="https://kennethwwheeler.substack.com/?utm_campaign=profile_chips" target="_blank" class="btn btn-light">Read on Substack</a>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section class="contact" id="contact">
+    <div class="container">
+      <h2>Contact</h2>
+      <p class="subtitle">Inquiries about press, tour stops, and media appearances can be made here.</p>
+      <form class="contact-form" onsubmit="event.preventDefault(); alert('Thank you! Your submission has been received!');">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input type="text" id="name" required>
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" required>
+        </div>
+        <div class="form-group">
+          <label for="message">Message</label>
+          <textarea id="message" placeholder="Type your message..." required></textarea>
+        </div>
+        <div class="form-checkbox">
+          <input type="checkbox" id="terms" required>
+          <label for="terms">I accept the <a href="#">Terms</a></label>
+        </div>
+        <button type="submit" class="btn">Submit</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2024 Kenneth W. Wheeler. All rights reserved.</p>
+    </div>
+  </footer>
+
+</body>
+</html>
